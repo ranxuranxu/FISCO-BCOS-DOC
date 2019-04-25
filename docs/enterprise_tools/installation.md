@@ -24,7 +24,7 @@ When using this tool, users need to place `fisco-bcos` binary program (demo inst
 
 Users can aquire FISCO BCOS executable program through one of the methods below. Downloading pre-compiled binary from GitHub is preferred. 
 
-- Statically linked pre-compiled file offered officially can be run on Ubuntu 16.04 and CentOS 7.2 or above.
+- Statically linked pre-compiled file offered officially can run on Ubuntu 16.04 and CentOS 7.2 or above.
 
 ```bash
 # aquire fisco-bcos binary file
