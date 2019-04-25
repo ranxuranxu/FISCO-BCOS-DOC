@@ -1,4 +1,4 @@
-# Deployment tool
+# Deployment Tool
 
 **Brief introduction**
 
@@ -29,7 +29,7 @@ In the above models, there is always one agency who gains priority to join the c
 
 How to make sure the group is formed in an equal, safe and private way? How to guarantee reliable and effective operation of nodes? The privacy and security of group ledgers, as well as the confidentiality of group formation and operation, need to be achieved in an effective way.
 
-**Design Concept**
+**Design concept**
 
 FISCO BCOS generator is a solution designed for problems described above. It takes into consideration the equal deployment and group formation of different agencies on the basis of flexibility, security, ease-of-use and equality.
 
