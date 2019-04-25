@@ -1,102 +1,100 @@
-# 案例分析
+# Case analysis
 
 ```eval_rst
 .. important::
-    使用前建议优先阅读 `教程-使用企业级部署工具 <../tutorial/enterprise_quick_start.html>`_ 
+    We recommend users to read `tutorial for deployment tool <../tutorial/enterprise_quick_start.html>`_ 
 ```
 
-## 组网示例
+## Networking example
 
-本节中我们将给出一个常见场景的例子。在本场景中，共有4家机构，分别为A、B、C、D。部署节点如下表所示
+We will take a common scenario as an example in this section. Here are 4 agencies, A, B, C, D, of which the nodes are deployed as below: 
 
-| 节点序号 |   P2P地址     |   RPC/channel地址     |   所属机构     |   所在群组     |
+| Node no. |   P2P address     |   RPC/channel address     |   Belonged agency     |   Belonged group     |
 | :-----------: | :-------------: | :-------------: | :-------------: | :-------------: |
-|   节点0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | 机构A | 群组1、2、3 |
-|   节点1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | 机构B | 群组1 |
-|   节点2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 | 机构C | 群组2 |
-|   节点3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | 机构D | 群组3 |
+|   Node 0     | 127.0.0.1:30300| 127.0.0.1:8545/:20200 | Agency A | Group 1、2、3 |
+|   Node 1     | 127.0.0.1:30301| 127.0.0.1:8546/:20201 | Agency B | Group 1 |
+|   Node 2     | 127.0.0.1:30302| 127.0.0.1:8547/:20202 | Agency C | Group 2 |
+|   Node 3     | 127.0.0.1:30303| 127.0.0.1:8548/:20203 | Agency D | Group 3 |
 
 ![](../../images/enterprise/star.png)
 
-机构A、B、C、D分别维护一个节点，机构A的节点0同时处于三个群组中，接下来我们将讲解如何对等的部署上述模式的多群组联盟链。
+Agency A、B、C、D maintains one node each. Node 0 of A is placed in 3 groups. Now, we will explain how to deploy the above multi-group consortium chain in a peer-to-peer way.
 
-### 证书协商
+### Certificate agreement
 
-#### 机构获取证书资格
+#### Aquire qualification for certificate
 
-1. 机构A、B、C、D在本机生成使用`agency.key`。
+1. Agency A, B, C, D generate `agency.key` locally.
 
-2. 机构A、B、C、D向第三方权威机构申请联盟链组网资格，由第三方权威机构生成根证书`ca.crt`，得到机构证书`agency.crt`
+2. Agency A, B, C, D apply for networking qualification from the third-party authority, who later generates root certificate `ca.crt`, to get certificate `agency.crt`.
 
-#### 协商节点证书
+#### Node certificate agreement
 
-1. 机构A、B、C、D本别用自己的机构私钥`agency.key`和机构证书`agency.crt`生成自己节点的证书cert_127.0.0.1_30300.crt，cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt。
+1. Agency A, B, C, D each generates node certificate through private key `agency.key` and certificate `agency.crt`cert_127.0.0.1_30300.crt，cert_127.0.0.1_30301.crt，cert_127.0.0.1_30302.crt，cert_127.0.0.1_30303.crt.
 
-2. 机构A分别与B、C、D协商节点证书，放置与meta文件夹下
+2. Agency A agrees on node certificate respectively with B, C, D, and places under meta folder.
 
 ```eval_rst
 .. note::
     
-    在这种场景中，我们假设A来生成所有群组的创世区块文件。
+    In this scenario, we suppose that A is the generator of Genesis Block. 
 ```
 
-### 机构A、B生成group1
+### Agency A and B form group 1
 
-组网流程如下：
+Networking process is as below:
 
 ![](../../images/enterprise/sample_star_1.png)
 
-1. 机构A将fisco-bcos可执行程序放置于meta文件夹下，修改`group_genesis.ini`，生成group1的创世区块，并将群组创世区块传给机构B
+1. Agency A places fisco-bcos executable program under meta folder, modifies information in `group_genesis.ini`, generates the Genesis Block of group 1 and deliver it to Agency B.
 
-2. 机构A、B分别修改`node_deployment.ini`中的信息，配置为节点0和节点1的信息，此步中`node`为自己机构的节点，`peers`为对应机构的节点连接信息
+2. Agency A, B each modifies information in `node_deployment.ini`, and configures Node 0 and Node 1. In this step, `node` is the node of each agency itself, and `peers` means link information of the counterparty.
+3. Agency A, B each generates node configuration file folder using [build_install_package](./operation.html#build-install-package-b) instruction.
 
-3. 机构A、B分别使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹
+4. Agency A, B each imports its private key to the generated node configuration file and activates node.
 
-4. 机构A、B分别使用将节点私钥导入生成的节点配置文件中，启动节点
+Then, Agency A, B have formed group 1.
 
-至此，完成机构A、B生成group1的操作
+### Agency A and C form group 2
 
-### 机构A、C生成group2
-
-组网流程如下：
+Networking process is as below:
 
 ![](../../images/enterprise/sample_star_2.png)
 
-1. 机构A修改`group_genesis.ini`，生成group2的创世区块，并将群组创世区块传给机构C
+1. Agency A modifies `group_genesis.ini` and generates the Genesis Block of group 2, and deliver it to Agency C.
 
-2. 机构A将group.2.genesis和group.2.ini拷贝到节点0配置文件夹的conf目录下，从启节点
+2. Agency A copies group.2.genesis and group.2.ini to conf section of Node 0 configuration file folder, and reactivate node.
 
-3. 机构C将fisco-bcos可执行程序放置于meta文件夹下，修改`node_deployment.ini`中的信息，配置为节点0和节点2的信息
+3. Agency C places fisco-bcos executable program under meta folder, modifies `node_deployment.ini` and configures Node 0 and Node 2.
 
-4. 机构C使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件中，启动节点
+4. Agency C generates node configuration file folder using [build_install_package](./operation.html#build-install-package-b) instruction, imports private key to configuration file and activates node.
 
-至此，完成机构A、C生成group3的操作
+Then, Agency A and C have formed group 2
 
-### 机构A、D生成group3
+### Agency A and D form group 3
 
-组网流程如下：
+Networking process is as below:
 
 ![](../../images/enterprise/star.png)
 
-1. 机构A修改`group_genesis.ini`，生成group3的创世区块，并将群组创世区块传给机构D
+1. Agency A modifies `group_genesis.ini`, generates the Genesis Block of group 3 and deliver it to Agency D.
 
-2. 机构A将group.3.genesis和group.3.ini拷贝到节点0配置文件夹的conf目录下，从启节点
+2. Agency A copies group.3.genesis and group.3.ini to conf section of Node 0 configuration file folder, and reactivate node.
 
-3. 机构D将fisco-bcos可执行程序放置于meta文件夹下，修改`node_deployment.ini`中的信息，配置为节点0和节点3的信息
+3. Agency D places fisco-bcos executable program under meta folder, modifies information in `node_deployment.ini` and configures Node 0 and Node 3.
 
-4. 机构D使用[build_install_package](./operation.html#build-install-package-b)命令生成节点配置文件夹，将私钥导入生成的节点配置文件中，启动节点
+4. Agency D generates node configuration file folder using [build_install_package](./operation.html#build-install-package-b) instruction, imports private key to the generated node configuration file and activates node.
 
-至此，完成机构A、D生成group3的操作
+Then, Agency A and D have formed group 3.
 
-### 配置SDK
+### Configure SDK
+After finishing the networking process above, agencies needs to accomplish the configuration of SDK and console. The way to connect configuration file is as below:
 
-完成上述初始组网操作后，机构业务需要完成SDK及控制台的配置，配置文档连接如下：
+[Configure Web3sdk](../sdk/sdk.md)
 
-[配置Web3sdk](../sdk/sdk.md)
+[Configuration console](../manual/console.md)
 
-[配置控制台](../manual/console.md)
-
-### 机构E新加节点进入group1
+### Agency E adds new node to join group 1
 
 在这种场景中，机构E需要扩容一个节点进入group1中，如下表所示
 
