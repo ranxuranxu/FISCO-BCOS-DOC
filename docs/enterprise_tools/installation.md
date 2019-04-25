@@ -1,6 +1,6 @@
-# Download & Install
+# Download & install
 
-## Environment Dependence
+## Environment dependence
 
 Dependence of FISCO BCOS generator:
 
@@ -11,7 +11,7 @@ Dependence of FISCO BCOS generator:
 | curl | default version |
 | nc | default version |
 
-## Download & Install
+## Download & install
 
 ```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
