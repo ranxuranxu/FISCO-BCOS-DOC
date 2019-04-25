@@ -1,17 +1,17 @@
-# 下载安装
+# Download & Install
 
-## 环境依赖
+## Environment Dependence
 
-FISCO BCOS generator依赖如下：
+Dependence of FISCO BCOS generator:
 
-| 依赖软件 | 支持版本 |
+| Dependent software | Supported version |
 | :-: | :-: |
-| python | 2.7+ 或 3.6+ |
+| python | 2.7+ or 3.6+ |
 | openssl | 1.0.2k+|
-| curl | 默认版本 |
-| nc | 默认版本 |
+| curl | default version |
+| nc | default version |
 
-## 下载安装
+## Download & Install
 
 ```bash
 $ git clone https://github.com/FISCO-BCOS/generator.git
@@ -20,16 +20,16 @@ $ bash ./scripts/install.sh
 $ ./generator -h
 ```
 
-在使用本工具时，需要在meta文件夹下放置`fisco-bcos`二进制程序（除demo命令外），`fisco-bcos`二进制程序的生成方式可以通过以下方式获取:
+When using this tool, users need to place `fisco-bcos` binary program (demo instruction is excepted) under meta folder. The way to get `fisco-bcos` binary program is as below:
 
-用户可以自由选择以下任一方式获取FISCO BCOS可执行程序。推荐从GitHub下载预编译二进制。
+Users can aquire FISCO BCOS executable program through one of the methods below. Downloading pre-compiled binary from GitHub is preferred. 
 
-- 官方提供的静态链接的预编译文件，可以在Ubuntu 16.04和CentOS 7.2以上版本运行。
+- Statically linked pre-compiled file offered officially can be run on Ubuntu 16.04 and CentOS 7.2 or above.
 
 ```bash
-# 准备fisco-bcos二进制文件
+# aquire fisco-bcos binary file
 $ ./generator --download_fisco ./meta
-# 检查二进制是否可执行 执行下述命令，看是否输出版本信息
+# check if the binary is executable and execute the instruction below to see the version information
 $ ./meta/fisco-bcos -v
 
-**PS**：源码编译获取可执行程序，参考[源码编译](../manual/get_executable.md)。
+**PS**：compile source code to aquire executable program, reference [source code compilation](../manual/get_executable.md)。
