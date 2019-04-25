@@ -1,69 +1,67 @@
-# 企业级部署工具
+# Deployment Tool
 
-**基本介绍**
+**Brief Introduction**
 
-[FISCO BCOS generator](https://github.com/FISCO-BCOS/generator)为企业用户提供了部署、管理和监控多机构多群组联盟链的便捷工具。
+[FISCO BCOS generator](https://github.com/FISCO-BCOS/generator) provides companies with an easy toolkit for deployment, administration and monitoring of multi-group consortium chain.
 
-- 本工具降低了机构间生成与维护区块链的复杂度，提供了多种常用的部署方式。
-- 本工具考虑了机构间节点安全性需求，所有机构间仅需要共享节点的证书，同时对应节点的私钥由各机构自己维护，不需要向机构外节点透露。
-- 本工具考虑了机构间节点的对等性需求，多机构间可以通过交换数字证书对等安全地部署自己的节点。
+- It eliminates the complexity of generating and maintaining blockchain and offers alternative deployment methods.
+- It requires agencies to share node credentials and manage their own private key but not expose to outsider, maintaining security of all nodes.
+- It helps agencies deploy nodes safely through e-credential trading, maintaining equality of all nodes.
 
 ![](../../images/enterprise/toolshow.png)
 
-**设计背景**
+**Design Background**
 
-在联盟链中，多个对等机构是不完全信任的。联盟链的节点之间需要使用数字证书互相进行身份认证。
-
-证书是机构对外身份的凭证，生成证书的过程中需要使用机构本身的公钥和私钥对。私钥即为机构在互联网上的身份信息，是私密的，不可对外告诉其他人的。节点在启动、运行过程中，需要使用私钥对数据包进行签名，从而完成身份认证过程。假设私钥泄露，则任何人都可以伪装成对应的机构，在不经过该机构授权行使该机构的权利。
+There cannot be exhaustive trust between equal agencies in consortium chain, where e-credentials will be needed for nodes to authenticate each other’s identity.
+Credential is the identity documentation for each agency. And the generation of credential depends on its own public & private key pair. Private key represents its identity information that is private and strictly confidential. In the process of activation and operation, node signs on the data packet with private key in order to fulfill identity authentication. Provided that an agency’s private key is revealed, anyone else can pretend as the owner and get authorized without affirmation of this agency.
 
 ```eval_rst
 .. important::
-    即在联盟链部署、运行过程中，机构节点的私钥是不应该告诉任何人，应当只能由本机构生成和保管。
+    During deployment and operation of consortium chain, each agency is the one and only generator and custodian of its own private key, and should never reveal it to anyone.
 ```
 
-在FISCO BCOS的群组初始化过程中，需要多个节点协商生成群组的创世区块。创世区块在同一个群组中是唯一的，其中包含了初始节点身份信息的区块。这些身份信息需要通过交换数字证书的方式来构建。
+When initializing the group of FISCO BCOS, nodes negotiate to create a Genesis Block. Genesis Block, unique and only within one group, bears the identity information of the initial nodes, which is formed through e-credential exchanging.
 
-现有的联盟链运维管理工具在初始化时都没有考虑联盟链间多个企业地位对等安全的诉求。联盟链在初始化时，需要协商创世节点中包含的节点信息。因此谁来生成这些信息就显得十分重要。现有做法为某一机构生成自己的节点信息，启动区块链，再加入其它机构的节点；或是由权威第三方机构直接生成所有机构内的节点信息，并将节点配置文件夹发送给各机构。
+Current IT administration tools for consortium chain usually ignore the requirement for equality and security of companies during initialization. And initialization needs agencies to negotiate about the identity information on Genesis Block. So, who should be the information generator is crucial. One of the solution is that an agency generates its node information first and then activate blockchain for other nodes to join in; or a third-party authority generates information for all nodes and send the node configuration files to each agency.
+Additionally, FISCO BCOS 2.0 adapts more private and scalable multi-group architecture. It is an architecture where data and transactions between groups are separated by running independent consensus algorithm, a way to maintain privacy and security in blockchain scenarios.
 
-另一方面，FISCO BCOS 2.0引入了隐私性和可扩展性更强的多群组架构。在群组架构下，群组间数据、交易相互隔离，每个群组运行独立的共识算法，可满足区块链场景中的隐私保护需求。
+In the above models, there is always one agency who gains priority to join the consortium chain or acquires private keys of all nodes.
 
-在上述模式中，总有一个机构会优先加入到联盟链之中；并且在这种模式中，总有一个机构会获得所有节点的私钥。
+How to make sure the group is formed in an equal, safe and private way? How to guarantee reliable and effective operation of nodes? The privacy and security of group ledgers, as well as the confidentiality of group formation and operation, need to be achieved in an effective way.
 
-如何保证企业间如何对等、安全、隐私地新建群组。新建群组之后如何保证节点可靠，有效的运行；群组账本的隐私性和安全性，以及企业建立群组、使用群组操作的隐私性都需要一个有效的方式来保证。
+**Design Concept**
 
-**设计思路**
+FISCO BCOS generator is a solution designed for problems described above. It takes into consideration the equal deployment and group formation of different agencies on the basis of flexibility, security, ease-of-use and equality.
 
-FISCO BCOS generator从上述背景出发，根据灵活、安全、易用、对等的原则，从不同机构对等部署、新建群组的角度考虑，设计了解决上述问题的解决方案。
+Flexibility:
 
-灵活：
+- No installation, ready to use
+- Alternative deployment methods
+- Allow multiple changes in architecture
 
-- 无需安装即可使用
-- 支持多种部署上报方式
-- 支持多种架构改动
+Safety:
 
-安全：
+- Allow multiple changes in architecture
+- Private key is kept internally
+- Negotiation between agencies is based on credentials only
 
-- 支持多种架构改动
-- 节点私钥不出内网
-- 机构间只需协商证书
+Ease-to-use:
 
-易用：
+- Support multiple networking models
+- Alternative commands for various needs
+- Monitor audit script
 
-- 支持多种组网模式
-- 多种命令满足不同需求
-- 监控审计脚本
+Equality:
 
-对等：
+- Equal authority of agencies
+- All agencies co-generate Genesis Block
+- Equal administrative power within groups
 
-- 机构地位对等
-- 所有机构共同产生创世区块
-- 机构对等管理所属群组
+For consortium chain based on existed root credential, it can fast configure multiple groups on chain to adapt for different business needs.
 
-针对同一根证书的联盟链，本工具可以快速配置链内的多个群组，满足不同企业的不同业务需求。
+After negotiating data model of node credential, IP and port number and filling the configuration items, each agency can generate a configuration file folder locally that includes no private key. Agencies can keep their private keys internally and prevent malicious attackers in disguise of nodes or any information leakage, even if the configuration files are lost. In this way, security and usability of nodes can be achieved at the same time.
 
-不同机构间通过协商节点证书、IP、端口号等数据的模式，填写配置项，每个机构都可以在本地生成不含节点私钥的节点配置文件夹，节点的私钥可以不出内网，即使节点配置文件丢失，防止恶意攻击者伪装节点的同事，不会泄露链上任何信息。使用这种方式，在保证节点可用的同时，保护节点的安全性。
-
-用户通过协商生成创世区块，生成节点配置文件夹后钥，启动节点，节点会根据用户配置信息进行多群组组网。
+Users negotiate to generate Genesis Block and node configuration file folder, and then activate nodes so that they will conduct multi-group networking according to the configuration files.
 
 ```eval_rst
 .. toctree::
