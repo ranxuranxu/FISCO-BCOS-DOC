@@ -1,6 +1,6 @@
-# Deployment Tool
+# Deployment tool
 
-**Brief Introduction**
+**Brief introduction**
 
 [FISCO BCOS generator](https://github.com/FISCO-BCOS/generator) provides companies with an easy toolkit for deployment, administration and monitoring of multi-group consortium chain.
 
@@ -10,7 +10,7 @@
 
 ![](../../images/enterprise/toolshow.png)
 
-**Design Background**
+**Design background**
 
 There cannot be exhaustive trust between equal agencies in consortium chain, where e-credentials will be needed for nodes to authenticate each other’s identity.
 Credential is the identity documentation for each agency. And the generation of credential depends on its own public & private key pair. Private key represents its identity information that is private and strictly confidential. In the process of activation and operation, node signs on the data packet with private key in order to fulfill identity authentication. Provided that an agency’s private key is revealed, anyone else can pretend as the owner and get authorized without affirmation of this agency.
@@ -20,9 +20,9 @@ Credential is the identity documentation for each agency. And the generation of 
     During deployment and operation of consortium chain, each agency is the one and only generator and custodian of its own private key, and should never reveal it to anyone.
 ```
 
-When initializing the group of FISCO BCOS, nodes negotiate to create a Genesis Block. Genesis Block, unique and only within one group, bears the identity information of the initial nodes, which is formed through e-credential exchanging.
+When initializing the group of FISCO BCOS, nodes should reach an agreement to create a Genesis Block. Genesis Block, unique and only within one group, bears the identity information of the initial nodes, which is formed through e-credential exchanging.
 
-Current IT administration tools for consortium chain usually ignore the requirement for equality and security of companies during initialization. And initialization needs agencies to negotiate about the identity information on Genesis Block. So, who should be the information generator is crucial. One of the solution is that an agency generates its node information first and then activate blockchain for other nodes to join in; or a third-party authority generates information for all nodes and send the node configuration files to each agency.
+Current IT administration tools for consortium chain usually ignore the requirement for equality and security of companies during initialization. And initialization needs agencies to agree on identity information on Genesis Block. So, who should be the information generator is crucial. One of the solution is that an agency generates its node information first and then activate blockchain for other nodes to join in; or a third-party authority generates information for all nodes and send the node configuration files to each agency.
 Additionally, FISCO BCOS 2.0 adapts more private and scalable multi-group architecture. It is an architecture where data and transactions between groups are separated by running independent consensus algorithm, a way to maintain privacy and security in blockchain scenarios.
 
 In the above models, there is always one agency who gains priority to join the consortium chain or acquires private keys of all nodes.
@@ -59,9 +59,9 @@ Equality:
 
 For consortium chain based on existed root credential, it can fast configure multiple groups on chain to adapt for different business needs.
 
-After negotiating data model of node credential, IP and port number and filling the configuration items, each agency can generate a configuration file folder locally that includes no private key. Agencies can keep their private keys internally and prevent malicious attackers in disguise of nodes or any information leakage, even if the configuration files are lost. In this way, security and usability of nodes can be achieved at the same time.
+After agreeing on the data model of node certificate, IP and port number and filling the configuration items, each agency can generate a configuration file folder locally that includes no private key. Agencies can keep their private keys internally and prevent malicious attackers in disguise of nodes or any information leakage, even if the configuration files are lost. In this way, security and usability of nodes can be achieved at the same time.
 
-Users negotiate to generate Genesis Block and node configuration file folder, and then activate nodes so that they will conduct multi-group networking according to the configuration files.
+Users make agreement to generate Genesis Block and node configuration file folder, and then activate nodes so that they will conduct multi-group networking according to the configuration files.
 
 ```eval_rst
 .. toctree::
